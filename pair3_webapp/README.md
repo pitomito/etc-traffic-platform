@@ -1,8 +1,8 @@
-# webapp — 正式站前端（Flask 代理 + 原生 JS）
+# pair3_webapp — 正式站前端（Flask 代理 + 原生 JS）
 
 使用者實際瀏覽的網站。Flask（`app.py`）扮演「靜態檔伺服器 + API 反向
 代理」的角色，本身不碰資料，所有 `/api/*` 請求原樣轉送給
-[`pair2api`](../pair2api/) 的查詢服務。
+[`pair2_api`](../pair2_api/) 的查詢服務。
 
 ## 檔案說明
 
@@ -29,10 +29,10 @@
 ## 查詢一次的完整路徑
 
 ```
-瀏覽器 → webapp/app.py（Flask 代理）
+瀏覽器 → pair3_webapp/app.py（Flask 代理）
             │  /api/*（同源，無 CORS 問題）
             ▼
-      pair2api/api_server_3.py（FastAPI + Spark，直查 HDFS 資料湖）
+      pair2_api/api_server_3.py（FastAPI + Spark，直查 HDFS 資料湖）
 ```
 
 前端一律打同源的 `/api/*`，代理層再轉送到實際的查詢服務，

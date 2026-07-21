@@ -1,6 +1,6 @@
 # 2026-07-17 查詢 API 更新：門架新舊編號展開 + M03A 月分區相容
 
-修改檔案：`pair2api/api_server_3.py`（pod 以 hostPath 掛載 `/opt/wulin/pair2api` → `/app`，改檔後重啟 pod 即生效，不需重建 image）
+修改檔案：`pair2_api/api_server_3.py`（pod 以 hostPath 掛載 `/opt/wulin/pair2_api` → `/app`，改檔後重啟 pod 即生效，不需重建 image）
 
 ## 問題一：門架改編號造成查詢結果被低估
 
@@ -74,7 +74,7 @@ curl -s 'http://<svc>/api/m03a?start=2023-04-20%2000:00:00&end=2023-04-30%2023:5
 
 ## 注意事項
 
-- 對照表更新後（例如未來又有門架改編號），**重啟 pair2api pod** 讓快取重載。
+- 對照表更新後（例如未來又有門架改編號），**重啟 pair2_api pod** 讓快取重載。
 - `gantry_summary.csv` 的 `舊門架代碼`/`新門架代碼` 欄位要成對維護
   （程式用 union-find，單邊有寫也能連起來，但建議兩邊都填）。
 - M06A 資料樹目前混有兩種欄位型別（2024–2025 全 string、2026-05 起 int/double），

@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pair2api
+  name: pair2_api
   namespace: dt
 spec:
   replicas: 1
   selector:
-    matchLabels: {app: pair2api}
+    matchLabels: {app: pair2_api}
   template:
     metadata:
-      labels: {app: pair2api}
+      labels: {app: pair2_api}
     spec:
       dnsPolicy: None
       dnsConfig:
@@ -18,8 +18,8 @@ spec:
       imagePullSecrets:
       - name: dkreg-cred
       containers:
-      - name: pair2api
-        image: registry.internal:5000/pair2api:v2
+      - name: pair2_api
+        image: registry.internal:5000/pair2_api:v2
         imagePullPolicy: Always
         command: ["bash", "-c"]
         args:
@@ -37,7 +37,7 @@ spec:
           mountPath: /opt/zfs
       volumes:
       - name: appcode
-        hostPath: {path: /opt/wulin/pair2api}
+        hostPath: {path: /opt/wulin/pair2_api}
       - name: zfs
         hostPath: {path: /opt/zfs}
 ---
@@ -47,7 +47,7 @@ metadata:
   name: pair2-api
   namespace: dt
 spec:
-  selector: {app: pair2api}
+  selector: {app: pair2_api}
   ports:
   - port: 8000
     targetPort: 8000

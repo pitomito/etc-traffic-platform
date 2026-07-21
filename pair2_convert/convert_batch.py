@@ -3,7 +3,7 @@
 convert_batch.py — TDCS 原始 CSV → /dataset/ 純 Parquet（M03A / M06A 共用，自我修復）
 ==============================================================================
 2026-07-17 起改回直接寫 /dataset/（取代先前的 Iceberg 版；原版備份
-convert_batch.py.bak-iceberg-20260717）。網站（pair2api）只讀 /dataset/ 的
+convert_batch.py.bak-iceberg-20260717）。網站（pair2_api）只讀 /dataset/ 的
 Hive 目錄結構，本支輸出跟既有結構完全一致：
 
   M03A（日分割）：/dataset/M03A/year=YYYY/month=MM/day=DD/*.parquet

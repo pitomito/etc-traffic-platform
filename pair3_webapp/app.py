@@ -1,6 +1,6 @@
 """webapp/app.py — 前端靜態檔 + API 代理層。
 
-所有 /api/* 請求轉送到 pair2api（FastAPI + Spark），由它查詢
+所有 /api/* 請求轉送到 pair2_api（FastAPI + Spark），由它查詢
 HDFS 的 /dataset/M03A 與 /dataset/M06A，webapp 本身不持有資料。
 上游位址由 webapp-config 的 PAIR2_API_URL 提供。
 本機只測前端畫面時，可直接執行 app_query_demo.py。
