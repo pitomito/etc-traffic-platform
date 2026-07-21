@@ -25,7 +25,7 @@
 
 ## 成果展示
 
-[![展示影片](https://img.youtu.be/vi/a9ZkTcBPuSE/maxresdefault.jpg)](https://youtu.be/a9ZkTcBPuSE)
+[![展示影片](https://img.youtube.com/vi/a9ZkTcBPuSE/maxresdefault.jpg)](https://youtu.be/a9ZkTcBPuSE)
 
 ---
 
