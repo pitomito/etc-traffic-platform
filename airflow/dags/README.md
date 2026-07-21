@@ -13,7 +13,7 @@ fetch_csv  →  put_to_hdfs  →  verify_and_heal  →  convert_parquet
 | `fetch_csv` | `pair1_pipeline/02_daily_automation/tdcs_daily_fetch.py` | 只抓「今天 - 5 天」的單日 CSV 到本機 staging |
 | `put_to_hdfs` | `pair1_pipeline/03_shared/put_to_hdfs.sh` | 掃 staging 有哪些 `year=/month=` 分區，逐一上傳 |
 | `verify_and_heal` | `tdcs_backfill_missing.py --auto` | 以 HDFS 現況為準，檔級比對近期窗口、補回缺檔 |
-| `convert_parquet` | [`pair2/convert_parquet/convert_batch.py`](../../pair2/convert_parquet/) | raw CSV → 分區 Parquet，冪等自我修復 |
+| `convert_parquet` | [`pair2_convert/convert_batch.py`](../../pair2_convert/) | raw CSV → 分區 Parquet，冪等自我修復 |
 
 ## 設計重點
 

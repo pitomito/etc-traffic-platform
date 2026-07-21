@@ -40,7 +40,7 @@
 - **冪等設計**：每個環節都可安全重跑；以「HDFS 現況」為準比對缺檔，斷點續跑不重工。
 - 歷史回填工具（tar.gz 解壓攤平 → 批次入湖），與每日流程共用同一套上傳邏輯。
 
-**ETL / 資料湖（`pair2/convert_parquet/`）**
+**ETL / 資料湖（`pair2_convert/`）**
 - CSV → 年月（/日）分區 Parquet，**寫入採「暫存目錄 → 驗筆數 → 原子 rename 換入」**，
   確保線上查詢永遠讀不到寫一半的資料。
 - 分區結構遷移工具（日分區 → 月分區）、schema 型別統一工具，皆含逐月筆數校驗與斷點續跑。
@@ -127,7 +127,7 @@ gunicorn -b 0.0.0.0:8000 -w 4 --timeout 120 app:app
 ```
 pair1_pipeline/     資料抓取與回填管線（歷史回填 / 每日自動化 / 共用工具）
 airflow/dags/       Airflow DAG：每日四段式 ETL 流程定義
-pair2/convert_parquet/  CSV→Parquet 轉檔、分區遷移、schema 統一等 Spark 工具
+pair2_convert/      CSV→Parquet 轉檔、分區遷移、schema 統一等 Spark 工具
 pair2api/           FastAPI + Spark 查詢服務（含門架別名展開等資料治理邏輯）
 webapp/             Flask 代理 + 原生 JS 前端（查詢頁 / 統計頁 / 地圖）
 ```

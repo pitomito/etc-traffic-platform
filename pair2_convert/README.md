@@ -1,7 +1,7 @@
-# pair2/convert_parquet — CSV → Parquet 資料湖轉檔工具
+# pair2_convert — CSV → Parquet 資料湖轉檔工具
 
 把 `pair1_pipeline` 上傳到 HDFS `/raw/` 的原始 CSV，轉成可供
-[`pair2api`](../../pair2api/) 直接查詢的分區 Parquet 資料湖 `/dataset/`。
+[`pair2api`](../pair2api/) 直接查詢的分區 Parquet 資料湖 `/dataset/`。
 分成「日常自動轉檔」「一次性遷移／重整工具」「投產前的調查腳本」三類。
 
 ## 日常自動轉檔（Airflow DAG 呼叫，生產路徑）

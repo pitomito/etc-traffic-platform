@@ -34,4 +34,4 @@ docs/                     操作手冊 / 設計紀錄
   部署到新環境時不用改程式本體。
 
 下游接續：`03_shared/put_to_hdfs.sh` 寫入的 `/raw/` 是
-[`pair2/convert_parquet/`](../pair2/convert_parquet/) 的輸入來源。
+[`pair2_convert/`](../pair2_convert/) 的輸入來源。
