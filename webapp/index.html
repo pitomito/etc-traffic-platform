@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ETC 國道流量平台</title>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/index.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <a class="brand" href="index.html">
+        <span class="brand-title">ETC 國道流量平台</span>
+        <span class="brand-subtitle">Taiwan Freeway Traffic Flow Platform</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html" class="active">首頁</a>
+        <a href="query.html">資料查詢</a>
+        <a href="stats.html">統計儀表板</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>ETC 國道流量平台</h1>
+      <p>
+        本平台提供國道 ETC 交通流量資料查詢與視覺化功能。使用者可依門架、車種、時間區間等條件查詢通行資料，並透過地圖與統計儀表板快速掌握國道路網的流量變化。
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="query.html">開始查詢資料</a>
+        <a class="btn btn-secondary" href="stats.html">查看統計儀表板</a>
+      </div>
+    </section>
+
+    <h2 class="section-title">平台功能</h2>
+
+    <section class="grid card-grid">
+      <article class="card">
+        <h3>資料查詢</h3>
+        <p>依起點門架、終點門架、車種與時間條件查詢國道流量資料，並於地圖上呈現查詢結果。</p>
+      </article>
+
+      <article class="card">
+        <h3>地圖視覺化</h3>
+        <p>使用互動式地圖呈現門架位置、路段方向與流量資訊，讓資料不只是一張表格。</p>
+      </article>
+
+      <article class="card">
+        <h3>統計摘要</h3>
+        <p>提供日流量、週流量、月流量等統計資訊，方便快速觀察國道使用趨勢。</p>
+      </article>
+    </section>
+
+    <h2 class="section-title">資料說明</h2>
+
+    <section class="card data-info-card">
+      <h3>資料來源</h3>
+
+      <p>
+        本平台使用交通部高速公路局發布之國道 ETC 開放資料，
+        主要包含車種通行量統計（M03A）與旅次路徑原始資料（M06A），
+        並透過資料清理、彙整與視覺化方式提供查詢服務。
+      </p>
+
+      <p>
+        為降低官方資料後續校正所造成的差異，本平台僅提供截至查詢日前五日已完成整理之資料；實際可查詢日期仍以系統資料庫收錄範圍為準。
+      </p>
+
+      <p class="data-source-link">
+        資料來源：
+        <a href="https://tisvcloud.freeway.gov.tw/" target="_blank" rel="noopener noreferrer">
+          交通資料庫 - 高速公路局
+        </a>
+      </p>
+
+      <p class="project-notice">
+        本網站為課程專題成果，非交通部高速公路局或其他政府機關之官方網站。
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <strong>ETC 國道流量平台</strong>
+        <p>國道 ETC 開放資料查詢與視覺化專題</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="index.html">首頁</a>
+        <a href="query.html">資料查詢</a>
+        <a href="stats.html">統計儀表板</a>
+        <a href="https://tisvcloud.freeway.gov.tw/" target="_blank" rel="noopener noreferrer">
+          資料來源
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>資料來源：交通部高速公路局／TDX 運輸資料流通服務</p>
+      <p>© 2026 ETC 國道流量平台專題小組</p>
+      <p>本網站為學習專題成果，非政府機關官方網站。</p>
+    </div>
+  </footer>
+</body>
+
+</html>

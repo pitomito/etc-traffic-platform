@@ -1,0 +1,17 @@
+from pyspark.sql import SparkSession
+from pyspark.sql import functions as F
+spark = (SparkSession.builder.appName("chk_cleanrule")
+         .config("spark.task.cpus", "1").getOrCreate())
+raw = spark.read.parquet("hdfs:///dataset/M06A/year=2026/year=2026/month=05")
+up  = spark.read.parquet("hdfs:///dataset/M06A/year=2026/month=05")
+print("== VehicleType 分佈（raw vs 上傳）==")
+r = raw.groupBy("VehicleType").count().withColumnRenamed("count","raw_cnt")
+u = up.groupBy("VehicleType").count().withColumnRenamed("count","up_cnt")
+(r.join(u, "VehicleType", "full").orderBy("VehicleType")
+  .withColumn("ratio", F.round(F.col("up_cnt")/F.col("raw_cnt"),3)).show())
+print("== 每日筆數（前 10 天）==")
+rd = raw.groupBy(F.substring("DetectionTime_O",1,10).alias("day")).count().withColumnRenamed("count","raw_cnt")
+ud = up.groupBy(F.substring("DetectionTime_O",1,10).alias("day")).count().withColumnRenamed("count","up_cnt")
+(rd.join(ud, "day", "full").orderBy("day")
+   .withColumn("ratio", F.round(F.col("up_cnt")/F.col("raw_cnt"),3)).show(10))
+spark.stop()

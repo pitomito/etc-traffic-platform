@@ -1,0 +1,806 @@
+/* ETC 國道流量平台 - Query page styles */
+/* 簡報一致化配色：Verdigris / Lavender Mist / Thistle / Dim Grey / Charcoal */
+
+/* Legacy query layout styles：保留給舊版查詢表單結構，之後確認不用可刪除 */
+.query-layout {
+  display: grid;
+  grid-template-columns: 480px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.form-panel,
+.map-panel,
+.result-panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+#map {
+  width: 100%;
+  height: 620px;
+  border-radius: 18px;
+}
+
+.result-panel {
+  margin-top: 20px;
+}
+
+.result-placeholder {
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.dataset-note {
+  margin: 14px 0 20px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #F8F1FF;
+  border: 1px solid #DECDF5;
+  border-left: 4px solid #1B998B;
+  color: #534D56;
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.form-section-title {
+  margin: 22px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+  font-size: 16px;
+}
+
+.time-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr 0.8fr;
+  gap: 10px;
+}
+
+/* Current query page redesign: compact one-screen operation */
+.query-page {
+  max-width: 1560px;
+  padding-top: 26px;
+}
+
+.compact-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 18px;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.query-search-card {
+  background: var(--panel);
+  border: 2px solid var(--line);
+  border-radius: 22px;
+  padding: 22px 24px 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+}
+
+.query-search-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 20px;
+  align-items: end;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 18px;
+}
+
+.query-search-header h2,
+.panel-title-row h2,
+.compact-result-panel h2 {
+  margin: 0 0 7px;
+  font-size: 22px;
+}
+
+.query-search-header p,
+.panel-title-row p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.dataset-switcher label {
+  font-size: 20px;
+  color: var(--muted);
+}
+
+.query-form-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 14px;
+  align-items: end;
+}
+
+.query-field {
+  grid-column: span 2;
+  min-width: 0;
+}
+
+.query-field.span-2 {
+  grid-column: span 3;
+}
+
+.query-field.compact-field {
+  grid-column: span 1;
+}
+
+.query-field label {
+  margin-bottom: 6px;
+  color: #534D56;
+  font-size: 13px;
+}
+
+.query-field input,
+.query-field select,
+.dataset-switcher select {
+  min-height: 44px;
+}
+
+.query-actions {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: .75fr 1fr;
+  gap: 10px;
+}
+
+.query-actions .btn {
+  width: 100%;
+  min-height: 44px;
+}
+
+.query-visual-layout {
+  display: grid;
+  grid-template-columns: 520px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+  margin-top: 24px;
+}
+
+.query-visual-layout .map-panel,
+.query-visual-layout .result-panel {
+  margin: 0;
+}
+
+.query-visual-layout .map-panel {
+  max-width: none;
+  max-height: none;
+}
+
+.query-map-panel {
+  position: sticky;
+  top: 94px;
+  align-self: start;
+  padding: 24px;
+}
+
+.panel-title-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 16px;
+}
+
+.map-legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 2px solid #F8F1FF;
+  box-shadow: 0 0 0 1px rgba(83, 77, 86, .18);
+}
+
+.legend-dot.north {
+  background: #2563eb;
+}
+
+.legend-dot.south {
+  background: #f97316;
+}
+
+.query-map-panel #map {
+  height: 620px;
+}
+
+.compact-result-panel {
+  margin-top: 0;
+}
+
+.query-chart-panel {
+  min-height: 100%;
+}
+
+.chart-empty-state {
+  min-height: 520px;
+  border: 1px dashed #656176;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #F8F1FF, #DECDF5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+}
+
+.gantry-tooltip {
+  font-weight: 800;
+}
+
+@media (max-width: 1200px) {
+  .query-search-header {
+    grid-template-columns: 1fr;
+  }
+
+  .query-form-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .query-field,
+  .query-field.span-2,
+  .query-field.compact-field {
+    grid-column: span 2;
+  }
+
+  .query-actions {
+    grid-column: span 2;
+  }
+
+  .query-visual-layout {
+    grid-template-columns: 480px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+
+  .query-layout,
+  .query-visual-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .query-map-panel {
+    position: static;
+  }
+
+  #map {
+    height: 420px;
+  }
+
+  .chart-empty-state {
+    min-height: 240px;
+  }
+
+  .time-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+@media (max-width: 700px) {
+
+  .query-search-card,
+  .query-map-panel {
+    padding: 18px;
+    border-radius: 18px;
+  }
+
+  .query-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .query-field,
+  .query-field.span-2,
+  .query-field.compact-field,
+  .query-actions {
+    grid-column: 1;
+  }
+
+  .query-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-title-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .query-map-panel #map {
+    height: 420px;
+  }
+
+  .chart-empty-state {
+    min-height: 220px;
+  }
+}
+
+/* M03A result dashboard */
+.result-panel-header {
+  align-items: center;
+}
+
+.result-dataset-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 64px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  color: #F8F1FF;
+  background:
+    linear-gradient(rgba(83, 77, 86, .40), rgba(83, 77, 86, .40)),
+    #1B998B;
+  border: 1px solid #1B998B;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: .06em;
+}
+
+.result-empty-state {
+  min-height: 520px;
+  border: 1px dashed #656176;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at top right, rgba(27, 153, 139, .12), transparent 34%),
+    linear-gradient(135deg, #F8F1FF, #DECDF5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 36px;
+  text-align: center;
+}
+
+.result-empty-state h3 {
+  margin: 14px 0 8px;
+  font-size: 21px;
+}
+
+.result-empty-state p {
+  max-width: 560px;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.empty-state-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  background: #DECDF5;
+  color: var(--primary-dark);
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.result-dashboard {
+  display: grid;
+  gap: 16px;
+}
+
+.result-status {
+  border-radius: 14px;
+  padding: 14px 16px;
+  line-height: 1.7;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.result-status.is-loading {
+  color: #534D56;
+  background: #F8F1FF;
+  border: 1px solid #1B998B;
+}
+
+.result-status.is-success {
+  color: #534D56;
+  background: #F8F1FF;
+  border: 1px solid #1B998B;
+}
+
+.result-status.is-empty {
+  color: #534D56;
+  background: #F8F1FF;
+  border: 1px solid #DECDF5;
+}
+
+.result-status.is-error {
+  color: #534D56;
+  background: #F8F1FF;
+  border: 1px solid #656176;
+}
+
+.result-section {
+  border: 1px solid #DECDF5;
+  border-radius: 18px;
+  padding: 18px;
+  background: #F8F1FF;
+}
+
+.result-section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 14px;
+}
+
+.result-section-heading h3 {
+  margin: 3px 0 0;
+  font-size: 19px;
+}
+
+.result-section-heading p {
+  margin: 7px 0 0;
+  color: var(--muted);
+  line-height: 1.65;
+  font-size: 14px;
+}
+
+.section-kicker {
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.section-note,
+.table-row-badge {
+  flex: 0 0 auto;
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: #656176;
+  background: #DECDF5;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.query-summary-section {
+  background:
+    radial-gradient(circle at top right, rgba(27, 153, 139, .10), transparent 34%),
+    #F8F1FF;
+}
+
+.query-summary-grid {
+  display: grid;
+  grid-template-columns: 1.6fr .75fr 1.25fr .8fr;
+  gap: 10px;
+}
+
+.query-summary-item {
+  min-width: 0;
+  padding: 13px 14px;
+  border-radius: 14px;
+  background: rgba(248, 241, 255, .88);
+  border: 1px solid #DECDF5;
+}
+
+.query-summary-item span {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.query-summary-item strong {
+  display: block;
+  color: #534D56;
+  line-height: 1.5;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.m03a-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.m03a-metric-card {
+  min-width: 0;
+  min-height: 126px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid #DECDF5;
+  background: linear-gradient(145deg, #F8F1FF, #DECDF5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.metric-card-label {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.metric-card-value {
+  margin: 8px 0 4px;
+  color: #534D56;
+  font-size: clamp(24px, 2.2vw, 34px);
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.metric-card-time {
+  font-size: clamp(16px, 1.35vw, 21px);
+  line-height: 1.35;
+}
+
+.m03a-metric-card small {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.m03a-chart-container {
+  position: relative;
+  min-height: 330px;
+  height: 390px;
+  padding: 6px 4px 0;
+}
+
+.result-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #DECDF5;
+  border-radius: 14px;
+}
+
+.result-data-table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  background: #F8F1FF;
+}
+
+.result-data-table th,
+.result-data-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #DECDF5;
+  text-align: left;
+  vertical-align: middle;
+  line-height: 1.55;
+}
+
+.result-data-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  color: #534D56;
+  background: #DECDF5;
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.result-data-table td {
+  color: #534D56;
+  font-size: 14px;
+}
+
+.result-data-table tbody tr:hover {
+  background: #F8F1FF;
+}
+
+.result-data-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.result-data-table td.is-number {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* 由渲染程式指定需要置中的欄位；路段名稱與車種名稱仍維持靠左。 */
+.result-data-table th.is-centered,
+.result-data-table td.is-centered {
+  text-align: center;
+}
+
+.raw-result-details {
+  border: 1px solid #DECDF5;
+  border-radius: 14px;
+  background: #F8F1FF;
+  overflow: hidden;
+}
+
+.raw-result-details summary {
+  cursor: pointer;
+  padding: 13px 15px;
+  color: #656176;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.raw-result-details pre {
+  max-height: 360px;
+  margin: 0;
+  padding: 16px;
+  overflow: auto;
+  border-top: 1px solid #DECDF5;
+  color: #534D56;
+  background: #DECDF5;
+  font-size: 12px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.btn:disabled {
+  opacity: .62;
+  cursor: wait;
+}
+
+@media (max-width: 1350px) {
+  .query-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .m03a-metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .result-empty-state {
+    min-height: 260px;
+  }
+
+  .m03a-chart-container {
+    height: 340px;
+  }
+}
+
+@media (max-width: 640px) {
+  .result-section {
+    padding: 15px;
+    border-radius: 16px;
+  }
+
+  .query-summary-grid,
+  .m03a-metric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .result-section-heading {
+    flex-direction: column;
+  }
+
+  .section-note,
+  .table-row-badge {
+    align-self: flex-start;
+  }
+
+  .m03a-chart-container {
+    height: 300px;
+  }
+}
+
+
+/* 地圖標題區：先完整顯示說明文字，再把圖例放到下一行 */
+.query-map-panel .panel-title-row {
+  display: block;
+}
+
+.query-map-panel .panel-title-row>div:first-child {
+  width: 100%;
+}
+
+.query-map-panel .panel-title-row p {
+  max-width: none;
+  width: 100%;
+  margin-top: 6px;
+}
+
+.query-map-panel .map-legend {
+  margin-top: 10px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  white-space: normal;
+}
+
+
+/* M06A 區間旅次結果 */
+.m06a-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.m06a-metric-card {
+  min-width: 0;
+  min-height: 126px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid #DECDF5;
+  background: linear-gradient(145deg, #F8F1FF, #DECDF5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.m06a-metric-card small {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.m06a-chart-container {
+  position: relative;
+  min-height: 350px;
+  height: 410px;
+  padding: 6px 4px 0;
+}
+
+.m06a-vehicle-chart-container {
+  position: relative;
+  min-height: 270px;
+  height: 320px;
+  padding: 6px 4px 0;
+}
+
+.route-endpoint-icon {
+  border: 0;
+  background: transparent;
+}
+
+.route-endpoint-marker {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #F8F1FF;
+  border: 4px solid rgba(248, 241, 255, .96);
+  box-shadow: 0 4px 14px rgba(83, 77, 86, .32);
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+@media (max-width: 1350px) {
+  .m06a-metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .m06a-metric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .m06a-chart-container {
+    height: 330px;
+  }
+
+  .m06a-vehicle-chart-container {
+    height: 280px;
+  }
+}

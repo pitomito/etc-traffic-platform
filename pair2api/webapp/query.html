@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>資料查詢｜ETC 國道流量平台</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/query.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <a class="brand" href="index.html">
+        <span class="brand-title">ETC 國道流量平台</span>
+        <span class="brand-subtitle">Taiwan Freeway Traffic Flow Platform</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html">首頁</a>
+        <a href="query.html" class="active">資料查詢</a>
+        <a href="stats.html">統計儀表板</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container query-page">
+    <section class="query-hero compact-hero">
+      <div>
+        <p class="eyebrow">Traffic Data Query</p>
+        <h1 class="page-title">資料查詢</h1>
+        <p class="page-description">
+          先選資料集，再填入時間、門架與車種條件。
+        </p>
+      </div>
+    </section>
+
+    <section class="query-search-card" aria-label="查詢條件">
+      <div class="query-search-header">
+        <div>
+          <h2>查詢條件</h2>
+          <p id="datasetHint">M03A：依時間區間、方向、門架代號與車種查詢各類車種通行量統計。</p>
+        </div>
+
+        <div class="dataset-switcher">
+          <label for="datasetType">資料集</label>
+          <select id="datasetType" name="dataset_type">
+            <option value="M03A">M03A｜各類車種通行量統計</option>
+            <option value="M06A">M06A｜各旅次路徑原始資料</option>
+          </select>
+        </div>
+      </div>
+
+      <form id="m03aForm" class="dataset-form query-form-grid">
+        <div class="query-field span-2">
+          <label for="m03aStartDate">起始日期</label>
+          <input id="m03aStartDate" name="start_date" type="date" />
+        </div>
+
+        <div class="query-field compact-field">
+          <label for="m03aStartHour">起始小時</label>
+          <select id="m03aStartHour" name="start_hour" class="hour-select"></select>
+        </div>
+
+        <div class="query-field compact-field">
+          <label for="m03aStartMinute">起始分鐘</label>
+          <select id="m03aStartMinute" name="start_minute" class="minute-select"></select>
+        </div>
+
+        <div class="query-field span-2">
+          <label for="m03aEndDate">終點日期</label>
+          <input id="m03aEndDate" name="end_date" type="date" />
+        </div>
+
+        <div class="query-field compact-field">
+          <label for="m03aEndHour">終點小時</label>
+          <select id="m03aEndHour" name="end_hour" class="hour-select"></select>
+        </div>
+
+        <div class="query-field compact-field">
+          <label for="m03aEndMinute">終點分鐘</label>
+          <select id="m03aEndMinute" name="end_minute" class="minute-select"></select>
+        </div>
+
+        <div class="query-field">
+          <label for="m03aDirection">方向</label>
+          <select id="m03aDirection" name="direction">
+            <option value="">全部方向</option>
+            <option value="N">往北（N）</option>
+            <option value="S">往南（S）</option>
+          </select>
+        </div>
+
+        <div class="query-field span-2">
+          <label for="m03aGantry">門架位置</label>
+          <select id="m03aGantry" name="gantry_id">
+            <option value="">全部門架位置</option>
+          </select>
+        </div>
+
+        <div class="query-field">
+          <label for="m03aVehicleType">車種</label>
+          <select id="m03aVehicleType" name="vehicle_type">
+            <option value="">全部車種</option>
+            <option value="31">小客車</option>
+            <option value="32">小貨車</option>
+            <option value="41">大客車</option>
+            <option value="42">大貨車</option>
+            <option value="5">聯結車</option>
+          </select>
+        </div>
+
+        <div class="query-actions">
+          <button class="btn btn-light" type="reset">清除</button>
+          <button class="btn btn-dark" type="button" id="m03aSearchBtn">查詢</button>
+        </div>
+      </form>
+
+      <form id="m06aForm" class="dataset-form query-form-grid hidden">
+        <div class="query-field span-2">
+          <label for="m06aStartDate">起始日期</label>
+          <input id="m06aStartDate" name="start_date" type="date" />
+        </div>
+
+        <div class="query-field compact-field">
+          <label for="m06aStartHour">起始小時</label>
+          <select id="m06aStartHour" name="start_hour" class="hour-select"></select>
+        </div>
+
+        <div class="query-field compact-field">
+          <label for="m06aStartMinute">起始分鐘</label>
+          <select id="m06aStartMinute" name="start_minute" class="minute-select"></select>
+        </div>
+
+        <div class="query-field span-2">
+          <label for="m06aEndDate">終點日期</label>
+          <input id="m06aEndDate" name="end_date" type="date" />
+        </div>
+
+        <div class="query-field compact-field">
+          <label for="m06aEndHour">終點小時</label>
+          <select id="m06aEndHour" name="end_hour" class="hour-select"></select>
+        </div>
+
+        <div class="query-field compact-field">
+          <label for="m06aEndMinute">終點分鐘</label>
+          <select id="m06aEndMinute" name="end_minute" class="minute-select"></select>
+        </div>
+
+        <div class="query-field">
+          <label for="m06aRoad">道路</label>
+          <select id="m06aRoad" name="road"></select>
+        </div>
+
+        <div class="query-field">
+          <label for="m06aDirection">方向</label>
+          <select id="m06aDirection" name="m06a_direction">
+            <option value="N">北上</option>
+            <option value="S">南下</option>
+          </select>
+        </div>
+
+        <div class="query-field span-2">
+          <label for="m06aStartGantry">起始門架位置</label>
+          <select id="m06aStartGantry" name="start_gantry">
+            <option value="">請選擇起始門架位置</option>
+          </select>
+        </div>
+
+        <div class="query-field span-2">
+          <label for="m06aEndGantry">終點門架位置</label>
+          <select id="m06aEndGantry" name="end_gantry">
+            <option value="">請選擇終點門架位置</option>
+          </select>
+        </div>
+
+        <div class="query-field">
+          <label for="m06aVehicleType">車種</label>
+          <select id="m06aVehicleType" name="vehicle_type">
+            <option value="">全部車種</option>
+            <option value="31">小客車</option>
+            <option value="32">小貨車</option>
+            <option value="41">大客車</option>
+            <option value="42">大貨車</option>
+            <option value="5">聯結車</option>
+          </select>
+        </div>
+
+        <div class="query-actions">
+          <button class="btn btn-light" type="reset">清除</button>
+          <button class="btn btn-dark" type="button" id="m06aSearchBtn">查詢</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="query-visual-layout" aria-label="查詢視覺化結果">
+      <section class="map-panel query-map-panel">
+        <div class="panel-title-row">
+          <div>
+            <h2>地圖顯示</h2>
+            <p>一進入頁面即顯示門架位置；滑鼠移到點位可查看門架名稱。</p>
+          </div>
+          <div class="map-legend" aria-label="地圖圖例">
+            <span class="legend-dot north"></span>北向
+            <span class="legend-dot south"></span>南向
+          </div>
+        </div>
+        <div id="map"></div>
+      </section>
+
+      <section class="result-panel compact-result-panel query-chart-panel" aria-live="polite">
+        <div class="panel-title-row result-panel-header">
+          <div>
+            <h2>查詢結果與圖表</h2>
+            <p id="resultPanelDescription">送出 M03A 查詢後，這裡會顯示條件摘要、重要指標、圖表與統計表格。</p>
+          </div>
+          <span class="result-dataset-badge" id="resultDatasetBadge">M03A</span>
+        </div>
+
+        <div class="result-empty-state" id="resultEmptyState">
+          <div class="empty-state-icon" aria-hidden="true">↗</div>
+          <h3>尚未送出查詢</h3>
+          <p>請先設定時間區間；方向、門架位置與車種可留空，留空代表查詢全部。</p>
+        </div>
+
+        <div class="result-dashboard hidden" id="resultDashboard">
+          <div class="result-status hidden" id="resultStatus" role="status"></div>
+
+          <section class="result-section query-summary-section" id="querySummarySection">
+            <div class="result-section-heading">
+              <div>
+                <span class="section-kicker">Query Summary</span>
+                <h3>根據您的查詢條件</h3>
+              </div>
+            </div>
+
+            <div class="query-summary-grid">
+              <article class="query-summary-item summary-time-item">
+                <span>查詢時間</span>
+                <strong id="summaryTime">--</strong>
+              </article>
+              <article class="query-summary-item">
+                <span id="summaryDirectionLabel">方向</span>
+                <strong id="summaryDirection">--</strong>
+              </article>
+              <article class="query-summary-item">
+                <span id="summaryGantryLabel">門架位置</span>
+                <strong id="summaryGantry">--</strong>
+              </article>
+              <article class="query-summary-item">
+                <span>車種</span>
+                <strong id="summaryVehicle">--</strong>
+              </article>
+            </div>
+          </section>
+
+          <section class="result-section hidden" id="m03aMetricsSection">
+            <div class="result-section-heading">
+              <div>
+                <span class="section-kicker">Overview</span>
+                <h3>M03A 流量摘要</h3>
+              </div>
+              <span class="section-note" id="metricDataNote">依 API 回傳資料計算</span>
+            </div>
+
+            <div class="m03a-metric-grid">
+              <article class="m03a-metric-card">
+                <span class="metric-card-label">總車流量</span>
+                <strong class="metric-card-value" id="metricTotalVolume">--</strong>
+                <small>輛</small>
+              </article>
+              <article class="m03a-metric-card">
+                <span class="metric-card-label">平均每日流量</span>
+                <strong class="metric-card-value" id="metricAverageDaily">--</strong>
+                <small>輛／日</small>
+              </article>
+              <article class="m03a-metric-card">
+                <span class="metric-card-label">涵蓋門架</span>
+                <strong class="metric-card-value" id="metricGantryCount">--</strong>
+                <small>處</small>
+              </article>
+              <article class="m03a-metric-card">
+                <span class="metric-card-label">尖峰時段</span>
+                <strong class="metric-card-value metric-card-time" id="metricPeakTime">--</strong>
+                <small id="metricPeakVolume">等待資料</small>
+              </article>
+            </div>
+          </section>
+
+          <section class="result-section hidden" id="m03aChartSection">
+            <div class="result-section-heading">
+              <div>
+                <span class="section-kicker">Visualization</span>
+                <h3 id="m03aChartTitle">車流量圖表</h3>
+                <p id="m03aChartDescription">系統會依查詢條件自動選擇適合的呈現方式。</p>
+              </div>
+            </div>
+            <div class="m03a-chart-container">
+              <canvas id="m03aChart" aria-label="M03A 車流量圖表"></canvas>
+            </div>
+          </section>
+
+          <section class="result-section hidden" id="m03aTableSection">
+            <div class="result-section-heading table-section-heading">
+              <div>
+                <span class="section-kicker">Breakdown</span>
+                <h3 id="m03aTableTitle">統計表格</h3>
+                <p id="m03aTableDescription">表格內容會依門架與車種條件自動切換。</p>
+              </div>
+              <span class="table-row-badge" id="m03aTableCount">0 筆</span>
+            </div>
+
+            <div class="result-table-wrapper">
+              <table class="result-data-table">
+                <thead id="m03aTableHead"></thead>
+                <tbody id="m03aTableBody"></tbody>
+              </table>
+            </div>
+          </section>
+
+
+          <section class="result-section hidden" id="m06aMetricsSection">
+            <div class="result-section-heading">
+              <div>
+                <span class="section-kicker">Trip Overview</span>
+                <h3>M06A 區間旅次摘要</h3>
+              </div>
+              <span class="section-note" id="m06aMetricDataNote">依 API 回傳資料計算</span>
+            </div>
+
+            <div class="m06a-metric-grid">
+              <article class="m06a-metric-card">
+                <span class="metric-card-label">總旅次數</span>
+                <strong class="metric-card-value" id="m06aMetricTotalTrips">--</strong>
+                <small>輛</small>
+              </article>
+
+              <article class="m06a-metric-card">
+                <span class="metric-card-label">平均每小時旅次</span>
+                <strong class="metric-card-value" id="m06aMetricAverageHourly">--</strong>
+                <small>輛／小時</small>
+              </article>
+
+              <article class="m06a-metric-card">
+                <span class="metric-card-label">尖峰時段</span>
+                <strong class="metric-card-value metric-card-time" id="m06aMetricPeakTime">--</strong>
+                <small id="m06aMetricPeakTrips">等待資料</small>
+              </article>
+
+              <article class="m06a-metric-card">
+                <span class="metric-card-label">主要車種</span>
+                <strong class="metric-card-value metric-card-time" id="m06aMetricMainVehicle">--</strong>
+                <small id="m06aMetricMainVehicleShare">等待資料</small>
+              </article>
+            </div>
+          </section>
+
+          <section class="result-section hidden" id="m06aTrendSection">
+            <div class="result-section-heading">
+              <div>
+                <span class="section-kicker">Trip Trend</span>
+                <h3 id="m06aTrendTitle">區間旅次時間趨勢</h3>
+                <p id="m06aTrendDescription">系統會依查詢期間自動選擇時間粒度。</p>
+              </div>
+            </div>
+
+            <div class="m06a-chart-container">
+              <canvas id="m06aTrendChart" aria-label="M06A 區間旅次時間趨勢圖"></canvas>
+            </div>
+          </section>
+
+          <section class="result-section hidden" id="m06aVehicleSection">
+            <div class="result-section-heading">
+              <div>
+                <span class="section-kicker">Vehicle Mix</span>
+                <h3>車種旅次組成</h3>
+                <p>查詢全部車種時，比較各車種通過此區間的旅次數與占比。</p>
+              </div>
+            </div>
+
+            <div class="m06a-vehicle-chart-container">
+              <canvas id="m06aVehicleChart" aria-label="M06A 車種旅次組成圖"></canvas>
+            </div>
+          </section>
+
+          <section class="result-section hidden" id="m06aTableSection">
+            <div class="result-section-heading table-section-heading">
+              <div>
+                <span class="section-kicker">Trip Breakdown</span>
+                <h3 id="m06aTableTitle">區間旅次統計表</h3>
+                <p id="m06aTableDescription">依時間區間彙整各車種旅次數。</p>
+              </div>
+              <span class="table-row-badge" id="m06aTableCount">0 筆</span>
+            </div>
+
+            <div class="result-table-wrapper">
+              <table class="result-data-table">
+                <thead id="m06aTableHead"></thead>
+                <tbody id="m06aTableBody"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <details class="raw-result-details hidden" id="rawResultDetails">
+            <summary>查看 API 原始回傳內容（除錯用）</summary>
+            <pre id="rawResultText"></pre>
+          </details>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <strong>ETC 國道流量平台</strong>
+        <p>國道 ETC 開放資料查詢與視覺化專題</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="index.html">首頁</a>
+        <a href="query.html">資料查詢</a>
+        <a href="stats.html">統計儀表板</a>
+        <a href="https://tisvcloud.freeway.gov.tw/" target="_blank" rel="noopener noreferrer">
+          資料來源
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>資料來源：交通部高速公路局／TDX 運輸資料流通服務</p>
+      <p>© 2026 ETC 國道流量平台專題小組</p>
+      <p>本網站為學習專題成果，非政府機關官方網站。</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="js/query.js"></script>
+</body>
+
+</html>

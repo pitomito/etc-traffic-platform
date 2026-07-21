@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pair2-web
+  namespace: dt
+spec:
+  type: NodePort
+  selector: {app: pair2api}
+  ports:
+  - port: 8000
+    targetPort: 8000
+    nodePort: 30081

@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pair2api
+  namespace: dt
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: pair2api}
+  template:
+    metadata:
+      labels: {app: pair2api}
+    spec:
+      dnsPolicy: None
+      dnsConfig:
+        nameservers: [10.96.0.10]
+        searches: [svc-dt.dt.svc.cluster.local, dt.svc.cluster.local, svc.cluster.local]
+      imagePullSecrets:
+      - name: dkreg-cred
+      containers:
+      - name: pair2api
+        image: registry.internal:5000/pair2api:v2
+        imagePullPolicy: Always
+        command: ["bash", "-c"]
+        args:
+        - set -a; . /etc/environment; set +a;
+          export PYTHONPATH="/opt/zfs/sys/spark-3.4.4-bin-hadoop3/python:/opt/zfs/sys/spark-3.4.4-bin-hadoop3/python/lib/py4j-0.10.9.7-src.zip";
+          export HADOOP_USER_NAME=bigred;
+          export PYSPARK_SUBMIT_ARGS="--master local[*] --driver-memory 8g pyspark-shell";
+          exec python3 /app/api_server_3.py
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+        - name: appcode
+          mountPath: /app
+        - name: zfs
+          mountPath: /opt/zfs
+      volumes:
+      - name: appcode
+        hostPath: {path: /opt/wulin/pair2api}
+      - name: zfs
+        hostPath: {path: /opt/zfs}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pair2-api
+  namespace: dt
+spec:
+  selector: {app: pair2api}
+  ports:
+  - port: 8000
+    targetPort: 8000

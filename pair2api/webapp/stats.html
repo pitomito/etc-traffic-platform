@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>統計儀表板｜ETC 國道流量平台</title>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/stats.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <a class="brand" href="index.html">
+        <span class="brand-title">ETC 國道流量平台</span>
+        <span class="brand-subtitle">Taiwan Freeway Traffic Flow Platform</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html">首頁</a>
+        <a href="query.html">資料查詢</a>
+        <a href="stats.html" class="active">統計儀表板</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container stats-page">
+    <section class="stats-hero">
+      <p class="eyebrow">Traffic Dashboard</p>
+      <h1 class="page-title">統計儀表板</h1>
+      <p class="page-description">
+        選擇日、週或月份，查詢該期間全部 ETC 門架與全部車種的整體流量趨勢、路段排行與車種占比。
+      </p>
+    </section>
+
+    <section class="stats-panel">
+      <section class="stats-control-card" aria-label="統計查詢控制區">
+        <div class="control-header">
+          <div>
+            <span class="control-kicker">Period</span>
+            <h2>選擇統計週期</h2>
+          </div>
+          <p>固定彙整全部門架、全部方向與全部車種，只需設定統計期間。</p>
+        </div>
+
+        <div class="stats-tabs stats-period-tabs" role="tablist" aria-label="統計週期切換">
+          <button class="tab-btn active" type="button" data-type="daily" role="tab" aria-selected="true">日流量</button>
+          <button class="tab-btn" type="button" data-type="weekly" role="tab" aria-selected="false">週流量</button>
+          <button class="tab-btn" type="button" data-type="monthly" role="tab" aria-selected="false">月流量</button>
+        </div>
+
+        <section class="stats-filter-panel" aria-label="統計查詢條件">
+          <div class="filter-toolbar">
+            <span class="control-kicker">Condition</span>
+            <h2 id="filterTitle">日流量查詢</h2>
+            <p id="filterHint">請選擇欲查詢的日期。</p>
+          </div>
+
+          <form id="statsFilterForm" class="stats-filter-form">
+            <div class="filter-group" data-filter="daily">
+              <label for="dailyDate">日期</label>
+              <input id="dailyDate" name="daily_date" type="date" />
+            </div>
+
+            <div class="filter-group hidden wide-filter" data-filter="weekly">
+              <label for="weeklyBaseDate">週別</label>
+              <div class="range-field">
+                <input id="weeklyRangeText" type="text" value="" readonly aria-label="週流量區間" />
+                <input id="weeklyBaseDate" name="weekly_base_date" type="date" aria-label="選擇週別日期" />
+              </div>
+              <p class="filter-help">選擇該週任一天，系統會自動換算為週日到週六。</p>
+            </div>
+
+            <div class="filter-group hidden" data-filter="monthly">
+              <div class="month-picker-grid">
+                <div>
+                  <label for="monthlyYear">年份</label>
+                  <select id="monthlyYear" name="monthly_year"></select>
+                </div>
+
+                <div>
+                  <label for="monthlyMonth">月份</label>
+                  <select id="monthlyMonth" name="monthly_month"></select>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn btn-dark stats-search-btn" type="submit" id="statsSearchBtn">查詢</button>
+          </form>
+        </section>
+      </section>
+
+      <div id="statsStatus" class="stats-status is-empty" role="status" aria-live="polite">
+        請選擇統計週期與時間條件後送出查詢。
+      </div>
+
+      <section id="statsResultContent" class="stats-result-content hidden" aria-label="統計查詢結果">
+        <header class="stats-result-header">
+          <div>
+            <span class="control-kicker">Overview</span>
+            <h2 id="statsRangeLabel">統計結果</h2>
+          </div>
+        </header>
+
+        <section class="stats-dashboard-layout" aria-label="整體流量趨勢">
+          <article class="stats-chart-card trend-chart-card">
+            <div class="chart-card-header trend-card-header">
+              <div>
+                <span class="control-kicker">Trend</span>
+                <h2 id="trendChartTitle">車流量趨勢</h2>
+                <p id="trendChartDescription">依統計期間呈現整體流量變化。</p>
+              </div>
+
+              <div class="trend-total-summary" aria-label="查詢期間總流量">
+                <span>總流量</span>
+                <strong id="totalFlow">--</strong>
+                <small>輛次</small>
+              </div>
+            </div>
+
+            <div class="chart-canvas-wrap trend-canvas-wrap">
+              <canvas id="trendChart"></canvas>
+            </div>
+          </article>
+        </section>
+
+        <section class="stats-analysis-grid" aria-label="排行與車種分析">
+          <article class="stats-chart-card">
+            <div class="chart-card-header">
+              <div>
+                <span class="control-kicker">Ranking</span>
+                <h2>最高流量路段前 10 名</h2>
+                <p>依門架群組與方向彙總查詢期間內全部車種流量。</p>
+              </div>
+            </div>
+            <div class="chart-canvas-wrap ranking-canvas-wrap">
+              <canvas id="rankingChart"></canvas>
+            </div>
+          </article>
+
+          <article class="stats-chart-card">
+            <div class="chart-card-header">
+              <div>
+                <span class="control-kicker">Vehicle Mix</span>
+                <h2>各車種流量占比</h2>
+                <p>比較五種車種在全部門架累積通行量中的占比。</p>
+              </div>
+            </div>
+            <div class="chart-canvas-wrap vehicle-canvas-wrap">
+              <canvas id="vehicleChart"></canvas>
+            </div>
+          </article>
+        </section>
+
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <strong>ETC 國道流量平台</strong>
+        <p>國道 ETC 開放資料查詢與視覺化專題</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="index.html">首頁</a>
+        <a href="query.html">資料查詢</a>
+        <a href="stats.html">統計儀表板</a>
+        <a href="https://tisvcloud.freeway.gov.tw/" target="_blank" rel="noopener noreferrer">資料來源</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>資料來源：交通部高速公路局／TDX 運輸資料流通服務</p>
+      <p>© 2026 ETC 國道流量平台專題小組</p>
+      <p>本網站為學習專題成果，非政府機關官方網站。</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="js/stats.js"></script>
+</body>
+
+</html>
