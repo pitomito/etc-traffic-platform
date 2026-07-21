@@ -21,6 +21,8 @@
 - 資料治理面：處理真實世界的髒資料問題——例如**門架改編號**造成的跨期查詢遺漏、
   歷史資料的 schema 演進、分區結構遷移等。
 
+[![觀看示範影片](https://drive.google.com/file/d/18ekFHl13S3O2lyegig7SOtWneqMjiGIc/view?usp=drive_link)](https://drive.google.com/file/d/18ekFHl13S3O2lyegig7SOtWneqMjiGIc/view?usp=drive_link)
+
 ## 技術棧
 
 | 層次 | 技術 |
