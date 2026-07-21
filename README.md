@@ -130,7 +130,19 @@ airflow/dags/       Airflow DAG：每日四段式 ETL 流程定義
 pair2_convert/      CSV→Parquet 轉檔、分區遷移、schema 統一等 Spark 工具
 pair2_api/          FastAPI + Spark 查詢服務（含門架別名展開等資料治理邏輯）
 pair3_webapp/       Flask 代理 + 原生 JS 前端（查詢頁 / 統計頁 / 地圖）
+docs/               系統建置文件：K8s 架構、Hadoop/Spark 版本與調校、整體網路拓樸
 ```
+
+## 系統建置與基礎設施
+
+想了解整套平台怎麼建的（Kubernetes 叢集組成、HDFS/Spark/Hive 版本與參數、
+網路拓樸、部署機制、實際踩過的坑與對策），見 [`docs/`](docs/)：
+
+| 文件 | 內容 |
+|---|---|
+| [`docs/architecture.md`](docs/architecture.md) | 三層網路結構、對外入口、資料流、檔案投遞機制 |
+| [`docs/kubernetes.md`](docs/kubernetes.md) | 叢集組成、namespace/工作負載、Service、儲存、部署機制 |
+| [`docs/hadoop-spark.md`](docs/hadoop-spark.md) | HDFS/YARN/Hive/Spark 版本、關鍵設定、調校筆記 |
 
 ## 技術亮點（面試向）
 
